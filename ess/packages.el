@@ -81,12 +81,8 @@
     (add-hook 'ess-mode-hook
               (lambda ()
                 (ess-toggle-underscore nil)))
-    ;; For ESS
-    (add-hook 'ess-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
     ;; For ESS consider underscore part of the word
-    ;; (add-hook 'ess-r-mode-hook
-    ;;           (lambda ()
-                ;; (modify-syntax-entry ?_ "w")))
+    (add-hook 'ess-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
 
     (add-hook 'ess-mode-hook
               (lambda ()
