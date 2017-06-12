@@ -29,9 +29,9 @@
 
 ;;; Code:
 
-(defconst polymode-packages
+(defconst jv-polymode-packages
   '(polymode))
-(defun polymode/init-polymode ()
+(defun jv-polymode/init-polymode ()
   (use-package polymode
     :mode (("\\.Rmd"   . Rmd-mode))
     :init
@@ -45,4 +45,14 @@
         (poly-markdown+r-mode))
       ))
   )
+
+(add-hook 'ess-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+;; For ES (add-hook 'ess-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+    ;; For ESS consider underscore part of the word
+    ;; (add-hook 'ess-r-mode-hook
+    ;;           (lambda ()
+      ;; consider underscore part of the word
+;; (add-hook 'ess-r-mode-hook
+;;           (lambda ()
+
 ;;; packages.el ends here

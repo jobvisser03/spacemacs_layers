@@ -41,14 +41,16 @@ values."
      themes-megapack
      evil-commentary
      html
-     (ess :variables
-          ess-enable-smart-equals t
-          ess-enable-smartparens t)
      ipython-notebook
      python
-     ;; python-data-science-packages
      yaml
-     polymode
+     ;; PRIVATE
+     ;; python-data-science-packages
+     (jv-ess :variables
+             ess-enable-smart-equals t
+             ess-enable-smartparens t)
+     jv-polymode
+     jv-misc
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these

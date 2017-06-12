@@ -30,7 +30,7 @@
 ;;; Code:
 
 ;; (defconst python-data-science-packages
-(setq python-data-science-packages
+(setq jv-python-data-science-packages
   '(
     eval-in-repl
     eval-in-repl-ielm

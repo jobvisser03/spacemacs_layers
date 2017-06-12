@@ -28,7 +28,7 @@
 ;;   `ess/post-init-PACKAGE' to customize the package as it is loaded.
 
 ;;; Code:
-(setq ess-packages
+(setq jv-ess-packages
   '(
     company
     ess
@@ -39,7 +39,7 @@
     smartparens
     ))
 
-(defun ess/init-ess ()
+(defun jv-ess/init-ess ()
   (use-package ess-site
     :mode (("\\.sp\\'"           . S-mode)
            ("/R/.*\\.q\\'"       . R-mode)
@@ -81,8 +81,12 @@
     (add-hook 'ess-mode-hook
               (lambda ()
                 (ess-toggle-underscore nil)))
-    ;; For ESS consider underscore part of the word
+    ;; For ESS
     (add-hook 'ess-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+    ;; For ESS consider underscore part of the word
+    ;; (add-hook 'ess-r-mode-hook
+    ;;           (lambda ()
+    ;; (modify-syntax-entry ?_ "w")))
 
     (add-hook 'ess-mode-hook
               (lambda ()
@@ -145,15 +149,15 @@
     (define-key inferior-ess-mode-map (kbd "C-j") 'comint-next-input)
     (define-key inferior-ess-mode-map (kbd "C-k") 'comint-previous-input)))
 
-(defun ess/init-ess-R-data-view ())
+(defun jv-ess/init-ess-R-data-view ())
 
-(defun ess/init-ess-R-object-popup ())
+(defun jv-ess/init-ess-R-object-popup ())
 
-(defun ess/post-init-rainbow-delimiters ()
+(defun jv-ess/post-init-rainbow-delimiters ()
   (add-hook 'ess-mode-hook #'rainbow-delimiters-mode))
 
 ;; To enable smart-equals-mode
-(defun ess/init-ess-smart-equals ()
+(defun jv-ess/init-ess-smart-equals ()
   (use-package ess-smart-equals
     :defer t
     :if ess-enable-smart-equals
@@ -163,7 +167,7 @@
       (add-hook 'inferior-ess-mode-hook 'ess-smart-equals-mode))))
 
 ;; To enable smartparens-mode in ess and iess
-(defun ess/post-init-smartparens ()
+(defun jv-ess/post-init-smartparens ()
   (use-package smartparens
     :defer t
     :if ess-enable-smartparens
