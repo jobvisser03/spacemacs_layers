@@ -252,7 +252,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup trailing
+   dotspacemacs-whitespace-cleanup 'trailing
    ))
 
 (defun dotspacemacs/user-init ()
@@ -275,12 +275,12 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  ;;; Python support ;; 
-  ;; (require 'python) ; if not done elsewhere 
+  ;;; Python support ;;
+  ;; (require 'python) ; if not done elsewhere
   (require 'eval-in-repl-python)
   (add-hook 'python-mode-hook
             '(lambda ()
-               (local-set-key (kbd "<C-return>") 'eir-eval-in-python))) 
+               (local-set-key (kbd "<C-return>") 'eir-eval-in-python)))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
