@@ -1,5 +1,5 @@
 This repo is intended to be dropped directly into the `.emacs.d/private` of a
-spacemacs configuration. 
+spacemacs configuration.
 
 ## Bootstrapping a new installation
 ```
@@ -17,3 +17,9 @@ cp ./dot.spacemacs ~/.spacemacs
 # ...edit ~/.spacemacs as necessary, e.g. for ycmd paths, etc...
 ```
 
+
+## Update the Git repo
+```
+# copy configuration to git repo
+cp .spacemacs .emacs.d/private/dot.spacemacs
+```
