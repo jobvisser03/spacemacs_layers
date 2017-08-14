@@ -9,7 +9,11 @@
 (define-key global-map (kbd "C-+") 'text-scale-increase)
 (define-key global-map (kbd "C--") 'text-scale-decrease)
 
+;; Navigate per paragraph
+(global-set-key (kbd "s-<down>") 'evil-forward-paragraph)
+(global-set-key (kbd "s-<up>") 'evil-backward-paragraph)
 
+;; Smartparens keybindings
 (define-key evil-insert-state-map (kbd "M-<right>") 'forward-word)
 (define-key evil-insert-state-map (kbd "M-<left>") 'backward-word)
 (define-key evil-insert-state-map (kbd "C-a") 'move-beginning-of-line) ;; was 'evil-paste-last-insertion
