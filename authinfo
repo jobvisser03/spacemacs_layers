@@ -1,0 +1,2 @@
+machine smtp.gmail.com login jvisser@jibes.nl password XXX
+machine imap.gmail.com login jvisser@jibes.nl port 993 password xxx

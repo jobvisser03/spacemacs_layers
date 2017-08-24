@@ -18,41 +18,42 @@ values."
    ;; of a list then all discovered layers will be installedHSC-E0923624EZS2011-01-15
    dotspacemacs-configuration-layers '(
                                        javascript
-     csv
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
-     auto-completion
-     better-defaults
-     emacs-lisp
-     git
-     markdown
-     org
-     ;; (org :variables
-     ;;      org-enable-github-support t)
-     (shell :variables
-             shell-default-height 30
-             shell-default-position 'bottom
-             shell-default-shell 'eshell)
-     spell-checking
-     syntax-checking
-     version-control
-     themes-megapack
-     evil-commentary
-     html
-     ipython-notebook
-     python
-     yaml
-     ;; PRIVATE
-     ;; python-data-science-packages
-     (jv-ess :variables
-             ess-enable-smart-equals nil
-             ess-enable-smartparens t)
-     jv-polymode
-     jv-misc
-     )
+                                       csv
+                                       ;; ----------------------------------------------------------------
+                                       ;; Example of useful layers you may want to use right away.
+                                       ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
+                                       ;; <M-m f e R> (Emacs style) to install them.
+                                       ;; ----------------------------------------------------------------
+                                       auto-completion
+                                       better-defaults
+                                       emacs-lisp
+                                       git
+                                       markdown
+                                       org
+                                       gnus
+                                       ;; (org :variables
+                                       ;;      org-enable-github-support t)
+                                       (shell :variables
+                                              shell-default-height 30
+                                              shell-default-position 'bottom
+                                              shell-default-shell 'eshell)
+                                       spell-checking
+                                       syntax-checking
+                                       version-control
+                                       themes-megapack
+                                       evil-commentary
+                                       html
+                                       ipython-notebook
+                                       python
+                                       yaml
+                                       ;; PRIVATE
+                                       ;; python-data-science-packages
+                                       (jv-ess :variables
+                                               ess-enable-smart-equals nil
+                                               ess-enable-smartparens t )
+                                       jv-polymode
+                                       jv-misc
+                                       )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
@@ -298,6 +299,36 @@ you should place your code here."
   (setq powerline-default-separator 'utf-8) ;; somehow gives the arrow seperator, looks fine
   (setq powerline-height 19)
 
+  ;; GNUS gmail support
+
+  ;; Get email, and store in nnml
+  (setq gnus-secondary-select-methods
+        '(
+          (nnimap "gmail"
+                  (nnimap-address
+                   "imap.gmail.com")
+                  (nnimap-server-port 993)
+                  (nnimap-stream ssl))
+          ))
+
+  ;; Send email via Gmail:
+  (setq message-send-mail-function 'smtpmail-send-it
+        smtpmail-default-smtp-server "smtp.gmail.com")
+
+  ;; Archive outgoing email in Sent folder on imap.gmail.com:
+  (setq gnus-message-archive-method '(nnimap "imap.gmail.com")
+        gnus-message-archive-group "[Gmail]/Sent Mail")
+
+  ;; set return email address based on incoming email address
+  (setq gnus-posting-styles
+        '(((header "to" "address@outlook.com")
+           (address "address@outlook.com"))
+          ((header "to" "address@gmail.com")
+           (address "address@gmail.com"))))
+
+  ;; store email in ~/gmail directory
+  (setq nnml-directory "~/gmail")
+  (setq message-directory "~/gmail")
 
   )
 
