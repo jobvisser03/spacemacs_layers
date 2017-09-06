@@ -30,6 +30,7 @@ values."
                                        git
                                        markdown
                                        org
+                                       ;; (org :variables org-projectile-file "~./gtd/todo.org")
                                        gnus
                                        ;; (org :variables
                                        ;;      org-enable-github-support t)
@@ -117,8 +118,9 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(flatland
-                         spacemacs-dark
+   dotspacemacs-themes '(spacemacs-dark
+                         flatland
+                         zenburn
                          ;monokai
                          material
                          ;wilson
@@ -267,6 +269,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (with-eval-after-load 'evil
     (defalias #'forward-evil-word #'forward-evil-symbol))
+
+  ;; some bug in the org-projectile
+  ;; (with-eval-after-load 'org-agenda
+  ;;   (require 'org-projectile)
+  ;;   (push (org-projectile:todo-files) org-agenda-files))
+
   )
 
 
@@ -300,7 +308,6 @@ you should place your code here."
   (setq powerline-height 19)
 
   ;; GNUS gmail support
-
   ;; Get email, and store in nnml
   (setq gnus-secondary-select-methods
         '(
@@ -330,6 +337,27 @@ you should place your code here."
   (setq nnml-directory "~/gmail")
   (setq message-directory "~/gmail")
 
+  ;; Setup Getting Things Done Workflow using:
+  ;; https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html
+  (setq org-agenda-files '("~/gtd/inbox.org"
+                           "~/gtd/gtd.org"
+                           "~/gtd/tickler.org"))
+
+  (setq org-capture-templates '(("t" "Todo [inbox]" entry
+                                 (file+headline "~/gtd/inbox.org" "Tasks")
+                                 "* TODO %i%?")
+                                ("T" "Tickler" entry
+                                 (file+headline "~/gtd/tickler.org" "Tickler")
+                                 "* %i%? \n %U")))
+
+  (setq org-refile-targets '(("~/gtd/gtd.org" :maxlevel . 3)
+                             ("~/gtd/someday.org" :level . 1)
+                             ("~/gtd/tickler.org" :maxlevel . 2)))
+
+  (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+
+  ;; Enable delete-selection-mode for NORMAL people in the HERE and NOW
+  (setq delete-selection-mode t)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

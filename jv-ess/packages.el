@@ -87,6 +87,7 @@
     ;; (add-hook 'ess-r-mode-hook
     ;;           (lambda ()
     ;; (modify-syntax-entry ?_ "w")))
+    (setq ess-smart-S-assign-key ";")
 
     (add-hook 'ess-mode-hook
               (lambda ()
