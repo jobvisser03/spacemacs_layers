@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: get object size
+# key:
+# --
+
+print(object.size(x=lapply("dt_prep", get)), units="Mb")

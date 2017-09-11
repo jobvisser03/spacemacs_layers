@@ -30,13 +30,15 @@
 ;;; Code:
 (setq jv-ess-packages
   '(
-    company
+    ;; company
     ess
     ess-R-data-view
     ess-R-object-popup
     ess-smart-equals
     rainbow-delimiters
     smartparens
+    ;; golden-ratio
+    ;; org
     ))
 
 (defun jv-ess/init-ess ()
@@ -72,8 +74,15 @@
     :commands (R stata julia SAS)
     :init
     (progn
+      (spacemacs/register-repl 'ess-site 'julia)
+      (spacemacs/register-repl 'ess-site 'R)
+      (spacemacs/register-repl 'ess-site 'SAS)
+      (spacemacs/register-repl 'ess-site 'stata)
+      ;; Explicitly run prog-mode hooks since ess-mode does not derive from
+      ;; prog-mode major-mode
+      (add-hook 'ess-mode-hook 'spacemacs/run-prog-mode-hooks)
       (when (configuration-layer/package-usedp 'company)
-          (add-hook 'ess-mode-hook 'company-mode))))
+        (add-hook 'ess-mode-hook 'company-mode))))
 
   ;; R --------------------------------------------------------------------------
   (with-eval-after-load 'ess-site
@@ -87,6 +96,7 @@
     ;; (add-hook 'ess-r-mode-hook
     ;;           (lambda ()
     ;; (modify-syntax-entry ?_ "w")))
+
     (setq ess-smart-S-assign-key ";")
 
     (add-hook 'ess-mode-hook
@@ -122,6 +132,7 @@
     (spacemacs/set-leader-keys-for-major-mode 'ess-julia-mode
       "si" 'julia)
     (spacemacs/set-leader-keys-for-major-mode 'ess-mode
+      "'"  'spacemacs/ess-start-repl
       "si" 'spacemacs/ess-start-repl
       ;; noweb
       "cC" 'ess-eval-chunk-and-go
@@ -177,5 +188,16 @@
       (add-hook 'ess-mode-hook 'smartparens-mode)
       (add-hook 'inferior-ess-mode-hook 'smartparens-mode))))
 
+(defun ess/pre-init-golden-ratio ()
+  (spacemacs|use-package-add-hook golden-ratio
+    :post-config
+    (dolist (f '(ess-eval-buffer-and-go
+                 ess-eval-function-and-go
+                 ess-eval-line-and-go))
+      (add-to-list 'golden-ratio-extra-commands f))))
+
+(defun ess/pre-init-org ()
+  (spacemacs|use-package-add-hook org
+    :post-config (add-to-list 'org-babel-load-languages '(R . t))))
 
 ;;; packages.el ends here
