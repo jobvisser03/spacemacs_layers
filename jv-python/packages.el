@@ -67,4 +67,7 @@
           '(lambda ()
              (local-set-key (kbd "<C-return>") 'eir-eval-in-python)))
 
+;; set encoding
+(setenv "PYTHONIOENCODING" "UTF-8")
+
 ;;; packages.el ends here
