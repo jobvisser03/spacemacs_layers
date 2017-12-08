@@ -1,4 +1,4 @@
-;;; packages.el --- python-data-science layer packages file for Spacemacs.
+;;; packages.el --- jv-python layer packages file for Spacemacs.
 ;;
 ;; Copyright (c) 2012-2017 Sylvain Benner & Contributors
 ;;
@@ -18,56 +18,52 @@
 ;;
 ;;
 ;; Briefly, each package to be installed or configured by this layer should be
-;; added to `python-data-science-packages'. Then, for each package PACKAGE:
+;; added to `jv-python-packages'. Then, for each package PACKAGE:
 ;;
 ;; - If PACKAGE is not referenced by any other Spacemacs layer, define a
-;;   function `python-data-science/init-PACKAGE' to load and initialize the package.
+;;   function `jv-python/init-PACKAGE' to load and initialize the package.
 
 ;; - Otherwise, PACKAGE is already referenced by another Spacemacs layer, so
-;;   define the functions `python-data-science/pre-init-PACKAGE' and/or
-;;   `python-data-science/post-init-PACKAGE' to customize the package as it is loaded.
+;;   define the functions `jv-python/pre-init-PACKAGE' and/or
+;;   `jv-python/post-init-PACKAGE' to customize the package as it is loaded.
 
 ;;; Code:
 
-;; (defconst python-data-science-packages
-(setq jv-python-data-science-packages
-  '(
-    eval-in-repl
-    eval-in-repl-ielm
-    eval-in-repl-hy
-    val-in-repl-python))
+(defconst jv-python-packages
+  '(elpy))
 
-;; Place REPL on the left of the script window when splitting.
-(setq eir-repl-placement 'right)
+(defun jv-python/init-elpy ()
+  (use-package elpy
+    :diminish elpy-mode
+    :config
 
-;; Uncomment if no need to jump after evaluating current line
-;; (setq eir-jump-after-eval nil)
+    ;; Elpy removes the modeline lighters. Let's override this
+    (defun elpy-modules-remove-modeline-lighter (mode-name))
 
-;;; ielm support (for emacs lisp)
-;; (require 'eval-in-repl-ielm)
-;; Evaluate expression in the current buffer.
-(setq eir-ielm-eval-in-current-buffer t)
-;; for .el files
-(define-key emacs-lisp-mode-map (kbd "<C-return>") 'eir-eval-in-ielm)
-;; for *scratch*
-(define-key lisp-interaction-mode-map (kbd "<C-return>") 'eir-eval-in-ielm)
-;; for M-x info
-(define-key Info-mode-map (kbd "<C-return>") 'eir-eval-in-ielm)
+    (setq elpy-modules '(elpy-module-sane-defaults
+                         elpy-module-eldoc
+                         elpy-module-pyvenv))
 
-;;; Hy support
-;; (require 'hy-mode) ; if not done elsewhere
-;; (require 'eval-in-repl-hy)
-(define-key hy-mode-map (kbd "<C-return>") 'eir-eval-in-hy)
+    (when (configuration-layer/layer-usedp 'auto-completion)
+      (add-to-list 'elpy-modules 'elpy-module-company)
+      (add-to-list 'elpy-modules 'elpy-module-yasnippet))
 
+    (elpy-enable)
+    ))
 
-;;; Python support
-;; (require 'python) ; if not done elsewhere
-;; (require 'eval-in-repl-python)
-(add-hook 'python-mode-hook
-          '(lambda ()
-             (local-set-key (kbd "<C-return>") 'eir-eval-in-python)))
-
-;; set encoding
-(setenv "PYTHONIOENCODING" "UTF-8")
+(defun jv-python/elpy-shell-send-word ()
+  "Send word at cursor."
+  (interactive)
+  (elpy-shell--ensure-shell-running)
+  (when (not elpy-shell-echo-input) (elpy-shell--append-to-shell-output "\n"))
+  (let ((beg (progn (evil-backward-word-begin) (point)))
+        (end (progn (evil-a-word) (point))))
+    ;; (elpy-shell--flash-and-message-region beg end)
+    (elpy-shell--with-maybe-echo
+     (python-shell-send-string (elpy-shell--region-without-indentation beg end))))
+  ;; (python-shell-send-string (word-at-point))))
+  ;; (python-shell-send-string (word-at-point)))
+  ;; (forward-word)
+  )
 
 ;;; packages.el ends here

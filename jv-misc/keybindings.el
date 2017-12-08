@@ -2,6 +2,19 @@
 ;; Keybindings only
 ;;======================================================================
 
+;; can't get this keybinding working, only in the sql +lang layer
+;; (evil-define-key 'normal sql-mode-map (kbd "h k") 'sql-beautify-region)
+
+;; (spacemacs/set-leader-keys-for-major-mode 'sql-mode
+;;   "hk" 'sql-beautify-region)
+
+(local-set-key (kbd "<C-return>") 'elpy-shell-send-statement-and-step)
+(local-set-key (kbd "<M-return>") 'elpy-shell-send-word)
+
+;; eir-eval-line-in-python using elpy now
+;; (global-set-key (kbd "C-c l") 'eir-eval-line-in-python)
+;; (global-set-key (kbd "C-c z") 'eir-eval-word-in-python)
+
 ;; C-TAB move between buffers
 (global-set-key [(control tab)] 'other-window)
 
