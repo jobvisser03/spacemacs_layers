@@ -8,8 +8,8 @@
 ;; (spacemacs/set-leader-keys-for-major-mode 'sql-mode
 ;;   "hk" 'sql-beautify-region)
 
-(local-set-key (kbd "<C-return>") 'elpy-shell-send-statement-and-step)
-(local-set-key (kbd "<M-return>") 'elpy-shell-send-word)
+;; (local-set-key (kbd "<C-return>") 'elpy-shell-send-statement-and-step)
+;; (local-set-key (kbd "<M-return>") 'elpy-shell-send-word)
 
 ;; eir-eval-line-in-python using elpy now
 ;; (global-set-key (kbd "C-c l") 'eir-eval-line-in-python)
