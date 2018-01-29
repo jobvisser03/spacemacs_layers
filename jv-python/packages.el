@@ -29,8 +29,19 @@
 
 ;;; Code:
 
-(defconst jv-python-packages
-  '(elpy))
+(setq jv-python-packages
+  '(
+    ;;elpy
+    python
+    eval-in-repl))
+
+;; (defun jv-python/init-eir ()
+;;   (use-package eval-in-repl
+;;     :defer t
+;;     :init
+;;     (spacemacs/set-leader-keys-for-major-mode 'python-mode "hi" 'shell-send-word-info)
+;;     (spacemacs/set-leader-keys-for-major-mode 'python-mode "ht" 'shell-send-word-type)
+;;     ))
 
 (defun jv-python/init-elpy ()
   (use-package elpy
@@ -41,8 +52,9 @@
     (defun elpy-modules-remove-modeline-lighter (mode-name))
 
     (setq elpy-modules '(elpy-module-sane-defaults
-                         elpy-module-eldoc
-                         elpy-module-pyvenv))
+                         ;; elpy-module-eldoc
+                         ;; elpy-module-pyvenv
+                         ))
 
     (when (configuration-layer/layer-usedp 'auto-completion)
       (add-to-list 'elpy-modules 'elpy-module-company)
@@ -51,21 +63,41 @@
     (elpy-enable)
     ))
 
-(defun jv-python/elpy-shell-send-word ()
-  "Send word at cursor."
+;; (defun jv-python/elpy-shell-send-word ()
+;;   "Send word at cursor."
+;;   (interactive)
+;;   (elpy-shell--ensure-shell-running)
+;;   (when (not elpy-shell-echo-input) (elpy-shell--append-to-shell-output "\n"))
+;;   ;; (let ((beg (progn (evil-backward-word-begin) (point)))
+;;         ;; (end (progn (evil-a-word) (point))))
+;;     ;; (elpy-shell--flash-and-message-region beg end)
+;;     (elpy-shell--with-maybe-echo
+;;      ;; (python-shell-send-string (elpy-shell--region-without-indentation beg end))))
+;;      ;; (python-shell-send-string (thing-at-point 'symbol))))
+;;   (python-shell-send-string (thing-at-point 'symbol)))
+;;   ;; (python-shell-send-string (word-at-point))))
+;;   ;; (python-shell-send-string (word-at-point)))
+;;   ;; (forward-word)
+;;   )
+
+(defun jv-python/shell-send-word ()
   (interactive)
-  (elpy-shell--ensure-shell-running)
-  (when (not elpy-shell-echo-input) (elpy-shell--append-to-shell-output "\n"))
-  ;; (let ((beg (progn (evil-backward-word-begin) (point)))
-        ;; (end (progn (evil-a-word) (point))))
-    ;; (elpy-shell--flash-and-message-region beg end)
-    (elpy-shell--with-maybe-echo
-     ;; (python-shell-send-string (elpy-shell--region-without-indentation beg end))))
-     ;; (python-shell-send-string (thing-at-point 'symbol))))
-  (python-shell-send-string (thing-at-point 'symbol)))
-  ;; (python-shell-send-string (word-at-point))))
-  ;; (python-shell-send-string (word-at-point)))
-  ;; (forward-word)
+  (eir-python-shell-send-string (thing-at-point 'symbol))
+  )
+
+(defun jv-python/shell-send-line ()
+  (interactive)
+  (eir-python-shell-send-string (thing-at-point 'line))
+  )
+
+(defun jv-python/shell-send-word-info ()
+  (interactive)
+  (eir-python-shell-send-string (concat (thing-at-point 'symbol) ".info()"))
+  )
+
+(defun jv-python/shell-send-word-type ()
+  (interactive)
+  (eir-python-shell-send-string (concat "type(" (thing-at-point 'symbol) ")"))
   )
 
 ;;; packages.el ends here

@@ -30,15 +30,13 @@
 ;;; Code:
 (setq jv-ess-packages
   '(
-    ;; company
     ess
     ess-R-data-view
-    ess-R-object-popup
     ess-smart-equals
     rainbow-delimiters
     smartparens
-    ;; golden-ratio
-    ;; org
+    golden-ratio
+    org
     ))
 
 (defun jv-ess/init-ess ()
@@ -86,40 +84,39 @@
 
   ;; R --------------------------------------------------------------------------
   (with-eval-after-load 'ess-site
-    ;; ESS added by Job
+    ;; No underscore bullshit
     (add-hook 'ess-mode-hook
               (lambda ()
                 (ess-toggle-underscore nil)))
-    ;; For ESS
-    (add-hook 'ess-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
     ;; For ESS consider underscore part of the word
-    ;; (add-hook 'ess-r-mode-hook
-    ;;           (lambda ()
-    ;; (modify-syntax-entry ?_ "w")))
+    (add-hook 'ess-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
 
+    ;; Use ; to <-
     (setq ess-smart-S-assign-key ";")
 
-    (add-hook 'ess-mode-hook
-              (lambda ()
-                (ess-set-style 'C++ 'quiet)
-                ;; Because
-                ;;                                 DEF GNU BSD K&R C++
-                ;; ess-indent-level                  2   2   8   5   4
-                ;; ess-continued-statement-offset    2   2   8   5   4
-                ;; ess-brace-offset                  0   0  -8  -5  -4
-                ;; ess-arg-function-offset           2   4   0   0   0
-                ;; ess-expression-offset             4   2   8   5   4
-                ;; ess-else-offset                   0   0   0   0   0
-                ;; ess-close-brace-offset            0   0   0   0   0
-                (add-hook 'local-write-file-hooks
-                          (lambda ()
-                            (ess-nuke-trailing-whitespace)))))
-    (setq ess-nuke-trailing-whitespace-p 'ask)
-    ;; or even
-    ;; (setq ess-nuke-trailing-whitespace-p t)
-    ;; Perl
-    (add-hook 'perl-mode-hook
-              (lambda () (setq perl-indent-level 4)))
+    ;; Follow Hadley Wickham's R style guide
+    (setq ess-first-continued-statement-offset 2
+          ess-continued-statement-offset 0
+          ess-expression-offset 2
+          ess-nuke-trailing-whitespace-p t
+          ess-default-style 'DEFAULT)
+
+    ;; (add-hook 'ess-mode-hook
+    ;;           (lambda ()
+    ;;             (ess-set-style 'C++ 'quiet)
+    ;;             ;; Because
+    ;;             ;;                                 DEF GNU BSD K&R C++
+    ;;             ;; ess-indent-level                  2   2   8   5   4
+    ;;             ;; ess-continued-statement-offset    2   2   8   5   4
+    ;;             ;; ess-brace-offset                  0   0  -8  -5  -4
+    ;;             ;; ess-arg-function-offset           2   4   0   0   0
+    ;;             ;; ess-expression-offset             4   2   8   5   4
+    ;;             ;; ess-else-offset                   0   0   0   0   0
+    ;;             ;; ess-close-brace-offset            0   0   0   0   0
+    ;;             (add-hook 'local-write-file-hooks
+    ;;                       (lambda ()
+    ;;                         (ess-nuke-trailing-whitespace)))))
+    ;; (setq ess-nuke-trailing-whitespace-p 'ask)
 
     (defun spacemacs/ess-start-repl ()
       "Start a REPL corresponding to the ess-language of the current buffer."
@@ -130,6 +127,7 @@
        ((string= "SAS" ess-language) (call-interactively 'SAS))))
 
     (spacemacs/set-leader-keys-for-major-mode 'ess-julia-mode
+      "'"  'julia
       "si" 'julia)
     (spacemacs/set-leader-keys-for-major-mode 'ess-mode
       "'"  'spacemacs/ess-start-repl
@@ -154,7 +152,6 @@
       "st" 'ess-eval-function
       ;; R helpers
       "hd" 'ess-R-dv-pprint
-      "hi" 'ess-R-object-popup
       "ht" 'ess-R-dv-ctable
       )
     (define-key ess-mode-map (kbd "<s-return>") 'ess-eval-line)
@@ -162,8 +159,6 @@
     (define-key inferior-ess-mode-map (kbd "C-k") 'comint-previous-input)))
 
 (defun jv-ess/init-ess-R-data-view ())
-
-(defun jv-ess/init-ess-R-object-popup ())
 
 (defun jv-ess/post-init-rainbow-delimiters ()
   (add-hook 'ess-mode-hook #'rainbow-delimiters-mode))

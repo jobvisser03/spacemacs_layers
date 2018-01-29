@@ -2,6 +2,9 @@
 ;; Keybindings only
 ;;======================================================================
 
+;; (spacemacs/set-leader-keys "'" 'iterm-focus)
+(spacemacs/set-leader-keys "'" 'iterm-goto-filedir-or-home)
+
 ;; can't get this keybinding working, only in the sql +lang layer
 ;; (evil-define-key 'normal sql-mode-map (kbd "h k") 'sql-beautify-region)
 
@@ -38,8 +41,8 @@
  ;; ("C-M-a" . sp-beginning-of-sexp)
  ;; ("C-M-e" . sp-end-of-sexp)
 
-(global-set-key (kbd "C-<down>") 'sp-down-sexp)
-(global-set-key (kbd "C-<up>") 'sp-up-sexp)
+(global-set-key (kbd "C-M-<down>") 'sp-down-sexp)
+(global-set-key (kbd "C-M-<up>") 'sp-up-sexp)
  ;; ("C-<down>" . sp-down-sexp)
  ;; ("C-<up>"   . sp-up-sexp)
 (global-set-key (kbd "M-<down>") 'sp-backward-down-sexp)
@@ -56,11 +59,11 @@
  ;; ("C-S-f" . sp-forward-symbol)
  ;; ("C-S-b" . sp-backward-symbol)
 
-(global-set-key (kbd "C-<right>") 'sp-forward-slurp-sexp)
+(global-set-key (kbd "C-M-<right>") 'sp-forward-slurp-sexp)
 ;; (global-set-key (kbd "M-<right>") 'sp-forwared-barf-sexp)
  ;; ("C-<right>" . sp-forward-slurp-sexp)
  ;; ("M-<right>" . sp-forward-barf-sexp)
-(global-set-key (kbd "C-<left>") 'sp-backward-slurp-sexp)
+(global-set-key (kbd "C-M-<left>") 'sp-backward-slurp-sexp)
 ;; (global-set-key (kbd "M-<left>") 'sp-backward-barf-sexp)
  ;; ("C-<left>"  . sp-backward-slurp-sexp)
  ;; ("M-<left>"  . sp-backward-barf-sexp)
