@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: meeting_notes
+# key: notes
+# --
+
+# ${0:Company} - ${1:Date}
+
+## Attendees
+- ${1:Job (VQD)}
+
+## Goal or Problem
+
+## Context
+
+## Next steps

@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: fwrite
-# key: fwrite
-# --
-fwrite(dt, paste0('./', 'dt_.csv'))

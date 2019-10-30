@@ -35,8 +35,8 @@
     ess-smart-equals
     rainbow-delimiters
     smartparens
-    golden-ratio
-    org
+    ;; golden-ratio
+    ;; org
     ))
 
 (defun jv-ess/init-ess ()

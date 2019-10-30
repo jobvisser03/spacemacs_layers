@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-#name : fread
-#key : fread
-#contributor : Job Visser
-# --
-fread(paste0('./dt.csv'))

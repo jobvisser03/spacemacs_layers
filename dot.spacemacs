@@ -28,49 +28,53 @@ values."
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '()
-   ;; List of configuration layers to load. If it is the symbol `all' instead
-   ;; of a list then all discovered layers will be installed.
-   dotspacemacs-configuration-layers '(
-                                       ;; ----------------------------------------------------------------
-                                       ;; Example of useful layers you may want to use right away.
-                                       ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-                                       ;; <M-m f e R> (Emacs style) to install them.
-                                       ;; ----------------------------------------------------------------
-                                       ;; rust
-                                       ;; javascript
-                                       csv
-                                       auto-completion
-                                       ;; better-defaults
-                                       emacs-lisp
-                                       git
-                                       markdown
-                                       ;; latex
-                                       org
-                                       ;; gnus
-                                       ; use iterm goto
-                                       ;; (shell :variables
-                                       ;;        shell-default-height 30
-                                       ;;        shell-default-position 'bottom
-                                       ;;        shell-default-shell 'eshell)
-                                       spell-checking
-                                       syntax-checking
-                                       version-control
-                                       ;; themes-megapack
-                                       evil-commentary
-                                       html
-                                       ipython-notebook
-                                       python
-                                       yaml
-                                       sql
-                                       gtags
-                                       ;; PRIVATE
-                                       (jv-ess :variables
-                                               ess-enable-smart-equals nil
-                                               ess-enable-smartparens t )
-                                       jv-polymode
-                                       jv-misc
-                                       ;; jv-python
-                                       )
+   ;; List of configuration layers to load.
+   dotspacemacs-configuration-layers
+   '(
+     rust
+     ;; ----------------------------------------------------------------
+     ;; Example of useful layers you may want to use right away.
+     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
+     ;; <M-m f e R> (Emacs style) to install them.
+     ;; ----------------------------------------------------------------
+     ivy
+     csv
+     auto-completion
+     ;; better-defaults
+     emacs-lisp
+     git
+     plantuml
+     (markdown :variables markdown-live-preview-engine 'vmd)
+     ;; latex
+     org
+     ;; gnus
+     ;; use iterm goto
+     ;; (shell :variables
+     ;;        shell-default-height 30
+     ;;        shell-default-position 'bottom
+     ;;        shell-default-shell 'eshell)
+     spell-checking
+     syntax-checking
+     version-control
+     themes-megapack
+     evil-commentary
+     html
+     javascript
+     ;; ipython-notebook
+     docker
+     python
+     yaml
+     sql
+     gtags
+     restclient
+     ;; PRIVATE
+     (jv-ess :variables
+             ess-enable-smart-equals nil
+             ess-enable-smartparens t )
+     jv-polymode
+     jv-misc
+     ;; jv-python
+     )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
@@ -78,7 +82,9 @@ values."
    dotspacemacs-additional-packages '(
                                       eval-in-repl
                                       smooth-scroll
-                                      ;; auctex-latexmk
+                                      all-the-icons
+                                      ;; realgud
+                                      ;; auctex-latex
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -133,7 +139,7 @@ values."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner 1
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
@@ -151,24 +157,29 @@ values."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
                          spacemacs-dark
+                         gruvbox-dark-medium
+                         zenburn
+                         solarized-dark
+                         material
+                         afternoon
+                         flatland
                          monokai
                          gotham
-                         material
-                         flatland
                          jbeans
-                         ;; zenburn
-                         ;wilson
+                         ;; wilson
                          ;; ample
-                         ;darkburn
-                         ;; django
+                         ;; darkburn
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '(;"Inconsolata-g"
-                               "Source Code Pro"
-                               :size 15
+   dotspacemacs-default-font '(
+                               ;; "Source Code Pro"
+                               ;; "Inconsolata"
+                               "Fira Code"
+                               ;; "Meslo LG M for Powerline"
+                               :size 19
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -186,7 +197,7 @@ values."
    ;; pressing `<leader> m`. Set it to `nil` to disable it. (default ",")
    dotspacemacs-major-mode-leader-key ","
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
-   ;; (default "C-M-m)
+   ;; (default "C-M-m")
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
    ;; These variables control whether separate commands are bound in the GUI to
    ;; the key pairs C-i, TAB and C-m, RET.
@@ -266,11 +277,11 @@ values."
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-active-transparency 95
+   dotspacemacs-active-transparency 96
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-inactive-transparency 90
+   dotspacemacs-inactive-transparency 85
    ;; If non nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
    ;; If non nil show the color guide hint for transient state keys. (default t)
@@ -304,7 +315,7 @@ values."
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
    ;; over any automatically added closing parenthesis, bracket, quote, etc…
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
-   dotspacemacs-smart-closing-parenthesis t
+   dotspacemacs-smart-closing-parenthesis nil
    ;; Select a scope to highlight delimiters. Possible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
    ;; emphasis the current one). (default 'all)
@@ -342,7 +353,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; log more undo actions
   (setq evil-want-fine-undo t)
 
-  (setenv "PYTHONIOENCODING" "utf-8")
+  ;; set neo-tree theme to fancy icons
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+
+
+  ;; ;; set interpreter to handle output utf8 error in inferior python
+  (setenv "PYTHONIOENCODING" "UTF-8")
   (setenv "LANG" "en_US.UTF-8")
   (setenv "LC" "en_US.UTF-8")
   (setenv "LC_ALL" "en_US.UTF-8")
@@ -402,6 +418,8 @@ you should place your code here."
                (spacemacs/set-leader-keys-for-major-mode 'python-mode "hv" 'shell-send-word-describe)
                (local-set-key (kbd "<C-return>") 'eir-eval-in-python)))
 
+  (setq python-shell-interpreter "ipython")
+  (setq python-shell-interpreter-args "-i")
 
   ;; smooth scroll
   ( require 'smooth-scroll                        ) ;; Smooth scroll
@@ -424,11 +442,11 @@ you should place your code here."
                            "~/gtd/tickler.org"))
 
   (setq org-capture-templates '(
-                                ;; ("m" "Meeting" entry (file "~/git/org/refile.org")
-                                ;;  "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
-                                ("f" "First meeting [inbox]" entry
-                                 (file+headline "~/gtd/inbox.org" "Tasks")
-                                 "* First Meeting \n** Attendees: \n - Job Visser:\n** Goal or Problem: \n** Context: \n Describe company, industry, conditions.\n** Stakeholders: \n** Conditions: \n When is it solved? How do we define success? Planning and days? \n** Miscellaneous: \n Traffic, hourly rate, etc.\n** Diagnose: \n Define problem, related points, time horizon.")
+                                ;;("m" "Meeting" entry (file "~/git/org/refile.org")
+                                ;; "* %? :MEETING:\n%U" :clock-in t :clock-resume t)
+                                ("f" "Meeting [notes]" entry
+                                 (file+headline "~/OneDrive - VIQTOR DAVIS/jibes/notes/notes.org" "Notes")
+                                 "* Meeting: %? \n** Attendees: \n - %i%?:\n** Goal or Problem: \n** Context: ")
                                 ("t" "Todo [inbox]" entry
                                  (file+headline "~/gtd/inbox.org" "Tasks")
                                  "* TODO %i%?")
@@ -447,7 +465,7 @@ you should place your code here."
 
   ;; To fix the error as suggested here: https://github.com/syl20bnr/spacemacs/pull/9547
   ;; “Symbol’s value as variable is void: helm-bookmark-map”
-  (require 'helm-bookmark)
+  ;; (require 'helm-bookmark)
 
   ;; SQL beatifier
   (defun sql-beautify-region (beg end)
@@ -477,21 +495,50 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
+   [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector
+   (vector "#ffffff" "#f36c60" "#8bc34a" "#fff59d" "#4dd0e1" "#b39ddb" "#81d4fa" "#263238"))
+ '(company-quickhelp-color-background "#4F4F4F")
+ '(company-quickhelp-color-foreground "#DCDCCC")
  '(custom-safe-themes
    (quote
-    ("444238426b59b360fb74f46b521933f126778777c68c67841c31e0a68b0cc920" "e8be55a51a7abac245c18f34cfcd7b4a3e02bc9e822476da53f5573e0c103d98" default)))
- '(evil-want-Y-yank-to-eol t)
+    ("2b9dc43b786e36f68a9fd4b36dd050509a0e32fe3b0a803310661edb7402b8b6" "1dd7b369ab51f00e91b6a990634017916e7bdeb64002b4dda0d7a618785725ac" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "2540689fd0bc5d74c4682764ff6c94057ba8061a98be5dd21116bf7bf301acfb" "04232a0bfc50eac64c12471607090ecac9d7fd2d79e388f8543d1c5439ed81f5" "2a7beed4f24b15f77160118320123d699282cbf196e0089f113245d4b729ba5d" "af4dc574b2f96f5345d55b98af024e2db9b9bbf1872b3132bc66dffbf5e1ba1d" "274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" "2593436c53c59d650c8e3b5337a45f0e1542b1ba46ce8956861316e860b145a0" "b583823b9ee1573074e7cbfd63623fe844030d911e9279a7c8a5d16de7df0ed0" "8f97d5ec8a774485296e366fdde6ff5589cf9e319a584b845b6f7fa788c9fa9a" "1436d643b98844555d56c59c74004eb158dc85fc55d2e7205f8d9b8c860e177f" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "3e335d794ed3030fefd0dbd7ff2d3555e29481fe4bbb0106ea11c660d6001767" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" "868f73b5cf78e72ca2402e1d48675e49cc9a9619c5544af7bf216515d22b58e7" "3a5f04a517096b08b08ef39db6d12bd55c04ed3d43b344cf8bd855bde6d3a1ae" "b85fc9f122202c71b9884c5aff428eb81b99d25d619ee6fde7f3016e08515f07" "19ba41b6dc0b5dd34e1b8628ad7ae47deb19f968fe8c31853d64ea8c4df252b8" "e11569fd7e31321a33358ee4b232c2d3cf05caccd90f896e1df6cab228191109" default)))
+ '(evil-want-Y-yank-to-eol nil)
+ '(fci-rule-color "#37474f" t)
  '(hl-sexp-background-color "#1c1f26")
- '(linum-format " %3i ")
+ '(nrepl-message-colors
+   (quote
+    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (white-sand-theme rebecca-theme org-mime exotica-theme toml-mode racer flycheck-rust cargo rust-mode ghub find-file-in-project ivy elpy sql-indent company-auctex auctex-latexmk auctex helm-gtags ggtags ess-view smooth-scroll web-beautify livid-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js-doc company-tern dash-functional tern coffee-mode org-category-capture request-deferred skewer-mode js2-mode simple-httpd deferred csv-mode eval-in-repl paredit python-x folding polymode sos zonokai-theme zenburn-theme zen-and-art-theme yapfify yaml-mode xterm-color web-mode unfill underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme slim-mode shell-pop seti-theme scss-mode sass-mode reverse-theme railscasts-theme pyvenv pytest pyenv-mode py-isort purple-haze-theme pug-mode professional-theme planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme pastels-on-dark-theme ox-gfm organic-green-theme org-projectile org-present org-pomodoro alert log4e gntp org-download omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme naquadah-theme mwim mustang-theme multi-term monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme material-theme markdown-toc markdown-mode majapahit-theme madhat2r-theme lush-theme live-py-mode light-soap-theme less-css-mode jbeans-theme jazz-theme ir-black-theme inkpot-theme hy-mode htmlize heroku-theme hemisu-theme helm-pydoc helm-css-scss helm-company helm-c-yasnippet hc-zenburn-theme haml-mode gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gnuplot git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md gandalf-theme fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck flatui-theme flatland-theme firebelly-theme farmhouse-theme evil-commentary ess-smart-equals ess-R-object-popup ess-R-data-view ctable julia-mode espresso-theme eshell-z eshell-prompt-extras esh-help emmet-mode ein websocket dracula-theme django-theme diff-hl darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme company-web web-completion-data company-statistics company-anaconda company color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme auto-yasnippet yasnippet auto-dictionary apropospriate-theme anti-zenburn-theme anaconda-mode pythonic ample-zen-theme ample-theme alect-themes afternoon-theme ac-ispell auto-complete ess ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox spinner orgit org-plus-contrib org-bullets open-junk-file neotree move-text magit-gitflow macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-gitignore request helm-flx helm-descbinds helm-ag google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
- '(safe-local-variable-values (quote ((TeX-master . t))))
- '(tramp-syntax (quote default) nil (tramp)))
+    (ob-restclient ob-http company-restclient know-your-http-well toml-mode racer flycheck-rust cargo rust-mode poly-markdown vmd-mode plantuml-mode poly-R transient lv restclient find-file-in-project elpy powerline spinner less-css-mode parent-mode flx let-alist anzu evil goto-chg undo-tree request projectile pkg-info bind-map bind-key packed async f s ace-window avy popup dockerfile-mode docker tablist docker-tramp iedit dash epl org-plus-contrib highlight helm hydra smartparens helm-core all-the-icons memoize web-beautify livid-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js-doc company-tern tern coffee-mode realgud zenburn-theme zen-and-art-theme white-sand-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme rebecca-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monochrome-theme molokai-theme moe-theme minimal-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gandalf-theme flatui-theme farmhouse-theme exotica-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme org-category-capture alert log4e gntp markdown-mode dash-functional haml-mode gitignore-mode fringe-helper git-gutter+ git-gutter flyspell-correct-ivy flyspell-correct pos-tip flycheck magit magit-popup git-commit ghub with-editor paredit ctable ess julia-mode skewer-mode request-deferred websocket deferred js2-mode simple-httpd web-completion-data company yasnippet anaconda-mode pythonic auto-complete wgrep smex ivy-hydra evil-nerd-commenter counsel-projectile counsel swiper ivy yapfify yaml-mode ws-butler winum which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sql-indent spaceline smooth-scroll smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin polymode pip-requirements persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file neotree move-text monokai-theme mmm-mode material-theme markdown-toc magit-gitflow macrostep lorem-ipsum live-py-mode linum-relative link-hint jbeans-theme indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gotham-theme google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md ggtags fuzzy flyspell-correct-helm flycheck-pos-tip flx-ido flatland-theme fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu eval-in-repl ess-smart-equals ess-R-data-view emmet-mode elisp-slime-nav ein dumb-jump diminish diff-hl define-word cython-mode csv-mode company-web company-statistics company-anaconda column-enforce-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adaptive-wrap ace-link ace-jump-helm-line ac-ispell)))
+ '(python-shell-interpreter "ipython" t)
+ '(python-shell-interpreter-args "-i" t)
+ '(vc-annotate-background nil)
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#f36c60")
+     (40 . "#ff9800")
+     (60 . "#fff59d")
+     (80 . "#8bc34a")
+     (100 . "#81d4fa")
+     (120 . "#4dd0e1")
+     (140 . "#b39ddb")
+     (160 . "#f36c60")
+     (180 . "#ff9800")
+     (200 . "#fff59d")
+     (220 . "#8bc34a")
+     (240 . "#81d4fa")
+     (260 . "#4dd0e1")
+     (280 . "#b39ddb")
+     (300 . "#f36c60")
+     (320 . "#ff9800")
+     (340 . "#fff59d")
+     (360 . "#8bc34a"))))
+ '(vc-annotate-very-old-color nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((((class color) (min-colors 257)) (:foreground "#F8F8F2" :background "#272822" :family "Source Code Pro" :foundry "nil" :slant normal :weight normal :height 120 :width normal)) (((class color) (min-colors 89)) (:foreground "#F5F5F5" :background "#1B1E1C" :family "Source Code Pro" :foundry "nil" :slant normal :weight normal :height 120 :width normal)))))
+ '(default ((((class color) (min-colors 89)) (:foreground "#ffffff" :background "#263238" :family "Meslo LG M for Powerline" :foundry "nil" :slant normal :weight normal :height 150 :width normal)))))
